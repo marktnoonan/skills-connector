@@ -356,7 +356,7 @@ export default {
           ...this.formFields,
           subjects: this.selectedRows
             .map((item) => `${item.Subject} (${item.Ages})`)
-            .join(", ") || 'Non chosen',
+            .join(", ") || 'None chosen',
         }),
       })
         .then(() => console.log("thank you"))
