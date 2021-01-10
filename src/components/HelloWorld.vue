@@ -35,7 +35,7 @@
           Fill out this form to request a session for your child.
         </p>
         <v-card class="pa-4 elevation-2">
-          <v-fade-transition>
+          <v-fade-transition mode="out-in">
             <v-form
               v-if="formState === 'initial'"
               data-netlify="true"
