@@ -34,7 +34,11 @@
           Fill out this form to request a session for your child.
         </p>
         <v-card class="pa-4 elevation-2">
-          <v-form netlify @submit.prevent="handleSubmit" name="session-request">
+          <v-form
+            data-netlify="true"
+            @submit.prevent="handleSubmit"
+            name="session-request"
+          >
             <input type="hidden" name="form-name" value="session-request" />
             <v-text-field
               v-model="formFields.parentName"
@@ -354,9 +358,10 @@ export default {
         body: encode({
           "form-name": event.target.getAttribute("name"),
           ...this.formFields,
-          subjects: this.selectedRows
-            .map((item) => `${item.Subject} (${item.Ages})`)
-            .join(", ") || 'None chosen',
+          subjects:
+            this.selectedRows
+              .map((item) => `${item.Subject} (${item.Ages})`)
+              .join(", ") || "None chosen",
         }),
       })
         .then(() => console.log("thank you"))
