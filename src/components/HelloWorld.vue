@@ -4,8 +4,7 @@
       <v-col>
         <p class="display-1 font-weight-bold mb-3">Skills List</p>
         <p class="subheading font-weight-regular">
-          Here's where you can see the available skills and request a session
-          for your child.
+          Here's where you can see the available skills and the hosts who are willing to teach them.
         </p>
         <v-data-table
           v-model="selectedRows"
