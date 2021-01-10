@@ -46,13 +46,10 @@
               </li>
             </ol>
             <p v-else>
-              None. Check on or more items in the table to request a session.
+              None. Check one or more items in the skills list table to request
+              a specific session.
             </p>
-            <v-btn
-              color="success"
-              class="d-block ml-auto mr-0"
-              type="submit"
-            >
+            <v-btn color="success" class="d-block ml-auto mr-0" type="submit">
               <span v-if="selectedRows.length < 2">Request Session</span>
               <span v-else>Request These Sessions</span>
             </v-btn>
@@ -356,9 +353,9 @@ export default {
   }),
   methods: {
     handleSubmit(event) {
-      console.log("handle submit", event)
-    }
-  }
+      console.log("handle submit", event);
+    },
+  },
 };
 </script>
 
