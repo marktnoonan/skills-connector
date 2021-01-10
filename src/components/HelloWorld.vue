@@ -37,6 +37,7 @@
         <v-card class="pa-4 elevation-2">
           <v-form
             data-netlify="true"
+            netlify
             @submit.prevent="handleSubmit"
             name="session-request"
           >
