@@ -34,12 +34,27 @@
           Fill out this form to request a session for your child.
         </p>
         <v-card class="pa-4 elevation-2">
-          <v-form @submit.prevent="handleSubmit">
+          <v-form @submit.prevent="handleSubmit" name="session-request">
             <input type="hidden" name="form-name" value="session-request" />
-            <v-text-field outlined type="text" label="Parent/Guardian Name" />
-            <v-text-field outlined type="email" label="Parent/Guardian Email" />
-            <v-text-field outlined type="text" label="Child's Name" />
-            <v-textarea outlined label="Notes" />
+            <v-text-field
+              v-model="formFields.parentName"
+              outlined
+              type="text"
+              label="Parent/Guardian Name"
+            />
+            <v-text-field
+              v-model="formFields.parentEmail"
+              outlined
+              type="email"
+              label="Parent/Guardian Email"
+            />
+            <v-text-field
+              v-model="formFields.childName"
+              outlined
+              type="text"
+              label="Child's Name"
+            />
+            <v-textarea v-model="formFields.notes" outlined label="Notes" />
             <h2 class="text-h6 pb-2">Sessions Selected:</h2>
             <ol v-if="selectedRows.length" class="mb-4">
               <li v-for="item in selectedRows" :key="item.id">
@@ -72,6 +87,12 @@ export default {
   name: "HelloWorld",
   data: () => ({
     search: "",
+    formFields: {
+      parentName: "",
+      parentEmail: "",
+      childName: "",
+      notes: "",
+    },
     selectedRows: [],
     headers: [
       {
@@ -332,10 +353,13 @@ export default {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({
           "form-name": event.target.getAttribute("name"),
-          ...name,
+          ...this.formFields,
+          subjects: this.selectedRows
+            .map((item) => `${item.Subject} (${item.Ages})`)
+            .join(", ") || 'Non chosen',
         }),
       })
-        .then(() => console.log('thank you'))
+        .then(() => console.log("thank you"))
         .catch((error) => console.log(error));
     },
   },
