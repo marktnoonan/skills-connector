@@ -2,13 +2,14 @@
   <v-container class="pt-6">
     <v-row>
       <v-col>
-        <p class="display-1 font-weight-bold mb-3">Skills List</p>
+        <p class="display-1 font-weight-bold mb-3">Subjects</p>
         <p class="subheading font-weight-regular">
-          Here's where you can see the available skills and the hosts who are
-          willing to teach them.
+          Here's where you can see the available subject and the related age
+          groups.
         </p>
         <v-data-table
           v-model="selectedRows"
+          mobile-breakpoint="200"
           :headers="headers"
           :items="filteredTableData"
           item-key="id"
@@ -41,24 +42,32 @@
           >
             <input type="hidden" name="form-name" value="session-request" />
             <v-text-field
+              dense
               v-model="formFields.parentName"
               outlined
               type="text"
               label="Parent/Guardian Name"
             />
             <v-text-field
+              dense
               v-model="formFields.parentEmail"
               outlined
               type="email"
               label="Parent/Guardian Email"
             />
             <v-text-field
+              dense
               v-model="formFields.childName"
               outlined
               type="text"
               label="Child's Name"
             />
-            <v-textarea v-model="formFields.notes" outlined label="Notes" />
+            <v-textarea
+              dense
+              v-model="formFields.notes"
+              outlined
+              label="Notes"
+            />
             <h2 class="text-h6 pb-2">Sessions Selected:</h2>
             <ol v-if="selectedRows.length" class="mb-4">
               <li v-for="item in selectedRows" :key="item.id">
