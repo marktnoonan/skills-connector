@@ -75,7 +75,7 @@
                 outlined
                 label="Notes"
               />
-              <input name="sessions" type="hidden" />
+              <input name="subjects" type="hidden" />
               <h2 class="text-h6 pb-2">Sessions Selected:</h2>
               <ol v-if="selectedRows.length" class="mb-4">
                 <li v-for="item in selectedRows" :key="item.id">
@@ -83,8 +83,8 @@
                 </li>
               </ol>
               <p v-else>
-                None. Check one or more items in the skills list table to
-                request a specific session.
+                None. Check one or more items in the subject list to request a
+                specific session.
               </p>
               <v-btn color="success" class="d-block ml-auto mr-0" type="submit">
                 <span v-if="selectedRows.length < 2">Request Session</span>
