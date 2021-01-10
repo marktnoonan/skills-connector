@@ -35,6 +35,7 @@
         </p>
         <v-card class="pa-4 elevation-2">
           <v-form @submit.prevent="handleSubmit">
+            <input type="hidden" name="form-name" value="session-request" />
             <v-text-field outlined type="text" label="Parent/Guardian Name" />
             <v-text-field outlined type="email" label="Parent/Guardian Email" />
             <v-text-field outlined type="text" label="Child's Name" />
@@ -61,9 +62,14 @@
 </template>
 
 <script>
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
+
 export default {
   name: "HelloWorld",
-
   data: () => ({
     search: "",
     selectedRows: [],
@@ -305,19 +311,32 @@ export default {
   computed: {
     filteredTableData() {
       const finalData = [];
-      this.tableData.forEach(item => {
-        if (!finalData.find(subject => {
-          return subject.Subject === item.Subject && subject.Ages === item.Ages
-        })) {
-          finalData.push(item)
+      this.tableData.forEach((item) => {
+        if (
+          !finalData.find((subject) => {
+            return (
+              subject.Subject === item.Subject && subject.Ages === item.Ages
+            );
+          })
+        ) {
+          finalData.push(item);
         }
-      }) 
+      });
       return finalData;
     },
   },
   methods: {
     handleSubmit(event) {
-      console.log("handle submit", event);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({
+          "form-name": event.target.getAttribute("name"),
+          ...name,
+        }),
+      })
+        .then(() => console.log('thank you'))
+        .catch((error) => console.log(error));
     },
   },
 };
