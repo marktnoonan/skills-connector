@@ -34,7 +34,7 @@
           Fill out this form to request a session for your child.
         </p>
         <v-card class="pa-4 elevation-2">
-          <v-form @submit.prevent="handleSubmit" name="session-request">
+          <v-form netlify @submit.prevent="handleSubmit" name="session-request">
             <input type="hidden" name="form-name" value="session-request" />
             <v-text-field
               v-model="formFields.parentName"
