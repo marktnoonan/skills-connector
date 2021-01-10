@@ -35,55 +35,66 @@
           Fill out this form to request a session for your child.
         </p>
         <v-card class="pa-4 elevation-2">
-          <v-form
-            data-netlify="true"
-            netlify
-            @submit.prevent="handleSubmit"
-            name="session-request"
-          >
-            <input type="hidden" name="form-name" value="session-request" />
-            <v-text-field
-              dense
-              v-model="formFields.parentName"
-              outlined
-              type="text"
-              label="Parent/Guardian Name"
-            />
-            <v-text-field
-              dense
-              v-model="formFields.parentEmail"
-              outlined
-              type="email"
-              label="Parent/Guardian Email"
-            />
-            <v-text-field
-              dense
-              v-model="formFields.childName"
-              outlined
-              type="text"
-              label="Child's Name"
-            />
-            <v-textarea
-              dense
-              v-model="formFields.notes"
-              outlined
-              label="Notes"
-            />
-            <h2 class="text-h6 pb-2">Sessions Selected:</h2>
-            <ol v-if="selectedRows.length" class="mb-4">
-              <li v-for="item in selectedRows" :key="item.id">
-                {{ item.Subject }}
-              </li>
-            </ol>
-            <p v-else>
-              None. Check one or more items in the skills list table to request
-              a specific session.
+          <v-fade-transition>
+            <v-form
+              v-if="formState === 'initial'"
+              data-netlify="true"
+              netlify
+              @submit.prevent="handleSubmit"
+              name="session-request"
+            >
+              <input type="hidden" name="form-name" value="session-request" />
+              <v-text-field
+                dense
+                v-model="formFields.parentName"
+                outlined
+                type="text"
+                name="parentName"
+                label="Parent/Guardian Name"
+              />
+              <v-text-field
+                dense
+                v-model="formFields.parentEmail"
+                outlined
+                type="email"
+                name="parentEmail"
+                label="Parent/Guardian Email"
+              />
+              <v-text-field
+                dense
+                v-model="formFields.childName"
+                outlined
+                type="text"
+                name="childName"
+                label="Child's Name"
+              />
+              <v-textarea
+                dense
+                v-model="formFields.notes"
+                name="notes"
+                outlined
+                label="Notes"
+              />
+              <input name="sessions" type="hidden" />
+              <h2 class="text-h6 pb-2">Sessions Selected:</h2>
+              <ol v-if="selectedRows.length" class="mb-4">
+                <li v-for="item in selectedRows" :key="item.id">
+                  {{ item.Subject }}
+                </li>
+              </ol>
+              <p v-else>
+                None. Check one or more items in the skills list table to
+                request a specific session.
+              </p>
+              <v-btn color="success" class="d-block ml-auto mr-0" type="submit">
+                <span v-if="selectedRows.length < 2">Request Session</span>
+                <span v-else>Request These Sessions</span>
+              </v-btn>
+            </v-form>
+            <p v-else-if="formState === 'thank-you'" class="text-center pt-4">
+              Thank You!
             </p>
-            <v-btn color="success" class="d-block ml-auto mr-0" type="submit">
-              <span v-if="selectedRows.length < 2">Request Session</span>
-              <span v-else>Request These Sessions</span>
-            </v-btn>
-          </v-form>
+          </v-fade-transition>
         </v-card>
       </v-col>
     </v-row>
@@ -107,6 +118,7 @@ export default {
       childName: "",
       notes: "",
     },
+    formState: "initial",
     selectedRows: [],
     headers: [
       {
@@ -374,7 +386,9 @@ export default {
               .join(", ") || "None chosen",
         }),
       })
-        .then(() => console.log("thank you"))
+        .then(() => {
+          this.formState = "thank-you";
+        })
         .catch((error) => console.log(error));
     },
   },
