@@ -353,6 +353,16 @@ export default {
         Subject: "Greek",
         Ages: "All",
       },
+      {
+        id: 44,
+        Subject: "Maths to A Level",
+        Ages: "Teens",
+      },
+      {
+        id: 45,
+        Subject: "Interview prep and personal statements",
+        Ages: "Teens",
+      },
     ],
   }),
   computed: {
